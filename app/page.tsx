@@ -19,7 +19,7 @@ export default function Home() {
                         font.className
                     )}
                 >
-                    🌎 TourPrompt
+                    🌎 TravelPrompt
                 </h1>
                 <p>Your Personalized City Tour, Just a Prompt Away</p>
                 <div>
