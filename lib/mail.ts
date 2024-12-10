@@ -12,7 +12,7 @@ export const sendVerificationEmail = async (
 
     // Sending the email
     await resend.emails.send({
-        from: `Next Auth V5 <mail@graffixapp.com>`,
+        from: `TravelPrompt <mail@graffixapp.com>`,
         to: email,
         subject: "Verify your email",
         html: `<p>Hello ${name}! Click <a href="${confirmationLink}">here</a> to verify your email</p>`,
@@ -29,7 +29,7 @@ export const sendPasswordResetEmail = async (
 
     // Sending the email
     await resend.emails.send({
-        from: `Next Auth V5 <mail@graffixapp.com>`,
+        from: `TravelPrompt <mail@graffixapp.com>`,
         to: email,
         subject: "Reset your password for Next Auth V5",
         html: `<p>Hello ${name}! Click <a href="${passwordResetLink}">here</a> to reset your password</p>`,
@@ -43,7 +43,7 @@ export const sendTwoFactorTokenEmail = async (
 ) => {
     // Sending the email
     await resend.emails.send({
-        from: `Next Auth V5 <mail@graffixapp.com>`,
+        from: `TravelPrompt <mail@graffixapp.com>`,
         to: email,
         subject: "2FA Code",
         html: `<p>Hello ${name}! Your 2FA code is ${token}</p>`,
