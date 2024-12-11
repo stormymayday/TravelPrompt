@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Map, Settings2, Earth } from "lucide-react";
+import { Map, Settings2, Earth, MapPin } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
@@ -23,6 +23,11 @@ const data = {
             title: "Tours",
             url: "/tours",
             icon: Map,
+        },
+        {
+            title: "New Tour",
+            url: "/tours/new-tour",
+            icon: MapPin,
         },
         {
             title: "Settings",

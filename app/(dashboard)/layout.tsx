@@ -8,6 +8,7 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { ModeToggle } from "@/components/mode-toggle";
+import Providers from "@/providers";
 
 async function DashboardLayout({ children }: { children: React.ReactNode }) {
     const session = await auth();
@@ -28,7 +29,7 @@ async function DashboardLayout({ children }: { children: React.ReactNode }) {
                             </div>
                         </header>
                         <div className="px-8 py-12 flex justify-center">
-                            {children}
+                            <Providers>{children}</Providers>
                         </div>
                     </SidebarInset>
                 </SidebarProvider>

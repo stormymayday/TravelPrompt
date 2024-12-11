@@ -11,6 +11,15 @@ export const LoginSchema = z.object({
     code: z.optional(z.string()),
 });
 
+export const GenerateTourSchema = z.object({
+    city: z.string().min(1, {
+        message: "City is required",
+    }),
+    country: z.string().min(1, {
+        message: "Country is required",
+    }),
+});
+
 export const RegisterSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8, {
