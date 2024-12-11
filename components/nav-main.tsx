@@ -3,17 +3,16 @@
 import { type LucideIcon } from "lucide-react";
 import Link from "next/link";
 
-import {
-    Collapsible,
-    // CollapsibleContent,
-    // CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import // Collapsible,
+// CollapsibleContent,
+// CollapsibleTrigger,
+"@/components/ui/collapsible";
 import {
     SidebarGroup,
     // SidebarGroupLabel,
     SidebarMenu,
     SidebarMenuButton,
-    // SidebarMenuItem,
+    SidebarMenuItem,
     // SidebarMenuSub,
     // SidebarMenuSubButton,
     // SidebarMenuSubItem,
@@ -32,7 +31,7 @@ export function NavMain({
         <SidebarGroup>
             <SidebarMenu>
                 {items.map((item) => (
-                    <Collapsible key={item.title}>
+                    <SidebarMenuItem key={item.title}>
                         <Link href={item.url}>
                             <SidebarMenuButton tooltip={item.title}>
                                 {item.icon && <item.icon />}
@@ -40,7 +39,7 @@ export function NavMain({
                                 <span>{item.title}</span>
                             </SidebarMenuButton>
                         </Link>
-                    </Collapsible>
+                    </SidebarMenuItem>
                 ))}
             </SidebarMenu>
         </SidebarGroup>
