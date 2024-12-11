@@ -59,10 +59,12 @@ export function NavUser() {
                         align="end"
                         sideOffset={4}
                     >
-                        <DropdownMenuItem>
-                            <LogOut />
-                            <LogoutButton>Log out</LogoutButton>
-                        </DropdownMenuItem>
+                        <LogoutButton>
+                            <DropdownMenuItem>
+                                <LogOut />
+                                Log out
+                            </DropdownMenuItem>
+                        </LogoutButton>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </SidebarMenuItem>
