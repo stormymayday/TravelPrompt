@@ -81,8 +81,8 @@ function NewTour() {
     };
 
     return (
-        <div className="flex flex-col items-center">
-            <Card className="w-[600px] max-w-[87vw]">
+        <div className="flex flex-col items-center w-[600px] max-w-[82vw]">
+            <Card className="w-full">
                 <CardHeader>
                     <p className="text-2xl font-semibold text-center">
                         🗺️ New Tour

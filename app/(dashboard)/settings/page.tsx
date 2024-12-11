@@ -81,7 +81,7 @@ function SettingsPage() {
     };
 
     return (
-        <Card className="w-[600px] max-w-[87vw]">
+        <Card className="w-[600px] max-w-[82vw]">
             <CardHeader>
                 <p className="text-2xl font-semibold text-center">
                     ⚙️ Settings

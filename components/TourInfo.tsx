@@ -7,7 +7,7 @@ interface TourInfoProps {
 const TourInfo = ({ tour }: TourInfoProps) => {
     const { title, description, stops } = tour;
     return (
-        <div className="w-[600px] max-w-[87vw]">
+        <div className="w-full">
             <h1 className="text-4xl font-semibold mb-4">{title}</h1>
             <p className="leading-loose mb-6">{description}</p>
             <ul>
