@@ -1,4 +1,4 @@
 function ToursPage() {
-    return <div className="p-4">Tours Page</div>;
+    return <div>Tours Page</div>;
 }
 export default ToursPage;

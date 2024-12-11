@@ -32,14 +32,15 @@ export function NavMain({
         <SidebarGroup>
             <SidebarMenu>
                 {items.map((item) => (
-                    <Link key={item.title} href={item.url}>
-                        <Collapsible>
+                    <Collapsible key={item.title}>
+                        <Link href={item.url}>
                             <SidebarMenuButton tooltip={item.title}>
                                 {item.icon && <item.icon />}
+
                                 <span>{item.title}</span>
                             </SidebarMenuButton>
-                        </Collapsible>
-                    </Link>
+                        </Link>
+                    </Collapsible>
                 ))}
             </SidebarMenu>
         </SidebarGroup>

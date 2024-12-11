@@ -1,4 +1,3 @@
-// import Navbar from "@/app/(protected)/_components/Navbar";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { AppSidebar } from "@/components/app-sidebar";
@@ -28,7 +27,7 @@ async function DashboardLayout({ children }: { children: React.ReactNode }) {
                                 <ModeToggle />
                             </div>
                         </header>
-                        {children}
+                        <div className="px-8 py-12">{children}</div>
                     </SidebarInset>
                 </SidebarProvider>
             </main>
