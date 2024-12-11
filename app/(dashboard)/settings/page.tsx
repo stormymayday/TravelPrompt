@@ -18,13 +18,13 @@ import {
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { PasswordInput } from "@/components/ui/PasswordInput";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/Select";
+// import {
+//     Select,
+//     SelectContent,
+//     SelectItem,
+//     SelectTrigger,
+//     SelectValue,
+// } from "@/components/ui/Select";
 import { Switch } from "@/components/ui/Switch";
 import { Button } from "@/components/ui/Button";
 import { settings } from "@/actions/settings";
@@ -33,7 +33,7 @@ import { toast } from "sonner";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import FormError from "@/components/FormError";
 import FormSuccess from "@/components/FormSuccess";
-import { UserRole } from "@prisma/client";
+// import { UserRole } from "@prisma/client";
 
 function SettingsPage() {
     const user = useCurrentUser();
@@ -81,7 +81,7 @@ function SettingsPage() {
     };
 
     return (
-        <Card className="w-[600px] max-w-[95vw] mb-5">
+        <Card className="w-[600px] max-w-[87vw]">
             <CardHeader>
                 <p className="text-2xl font-semibold text-center">
                     ⚙️ Settings
@@ -181,7 +181,7 @@ function SettingsPage() {
                                 </>
                             )}
 
-                            <FormField
+                            {/* <FormField
                                 control={form.control}
                                 name="role"
                                 render={({ field }) => {
@@ -220,7 +220,7 @@ function SettingsPage() {
                                         </FormItem>
                                     );
                                 }}
-                            />
+                            /> */}
                             {user?.isOAuth === false && (
                                 <FormField
                                     control={form.control}

@@ -27,7 +27,9 @@ async function DashboardLayout({ children }: { children: React.ReactNode }) {
                                 <ModeToggle />
                             </div>
                         </header>
-                        <div className="px-8 py-12">{children}</div>
+                        <div className="px-8 py-12 flex justify-center">
+                            {children}
+                        </div>
                     </SidebarInset>
                 </SidebarProvider>
             </main>
