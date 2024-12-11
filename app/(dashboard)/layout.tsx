@@ -8,6 +8,7 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { ModeToggle } from "@/components/mode-toggle";
 
 async function DashboardLayout({ children }: { children: React.ReactNode }) {
     const session = await auth();
@@ -24,6 +25,7 @@ async function DashboardLayout({ children }: { children: React.ReactNode }) {
                                     orientation="vertical"
                                     className="mr-2 h-4"
                                 />
+                                <ModeToggle />
                             </div>
                         </header>
                         {children}

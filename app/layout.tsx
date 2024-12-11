@@ -3,6 +3,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { Toaster } from "@/components/ui/Sonner";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
     title: "TravelPrompt",
@@ -21,8 +22,15 @@ export default async function RootLayout({
         <SessionProvider session={session}>
             <html lang="en">
                 <body>
-                    <Toaster />
-                    {children}
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        <Toaster />
+                        {children}
+                    </ThemeProvider>
                 </body>
             </html>
         </SessionProvider>
