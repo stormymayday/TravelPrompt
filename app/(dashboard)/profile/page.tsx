@@ -1,4 +1,4 @@
 function ProfilePage() {
-    return <div>Profile Page</div>;
+    return <div className="p-4">Profile Page</div>;
 }
 export default ProfilePage;
