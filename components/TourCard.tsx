@@ -12,8 +12,8 @@ const TourCard = ({ tour }: TourCardInterface) => {
 
     return (
         <Link href={`/tours/${id}`}>
-            <Card className="hover:bg-accent/10 transition-colors duration-200">
-                <CardContent className="p-4 flex items-center justify-center text-center">
+            <Card className="hover:bg-accent/10 transition-colors duration-200 h-full flex flex-col">
+                <CardContent className="p-4 flex items-center justify-center text-center flex-grow">
                     <CardTitle className="text-lg">
                         {capitalizeFirstLetter(city)}, {country.toUpperCase()}
                     </CardTitle>

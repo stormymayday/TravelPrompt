@@ -11,7 +11,7 @@ export default async function AllToursPage() {
 
     // prefetching tours
     await queryClient.prefetchQuery({
-        queryKey: ["tours"],
+        queryKey: ["tours", ""],
         queryFn: () => getAllTours(),
     });
 
