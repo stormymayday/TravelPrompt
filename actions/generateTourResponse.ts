@@ -15,7 +15,11 @@ export const generateTourResponse = async (
     const validatedFields = TourDestinationSchema.safeParse(values);
 
     if (!validatedFields.success) {
-        return null;
+        return {
+            success: "",
+            error: " Please enter City and Country.",
+            tour: null,
+        };
     }
 
     // Extracting validated fields
@@ -54,22 +58,34 @@ export const generateTourResponse = async (
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const rawContent = (response as any).choices[0].message.content || "";
-        let tourData;
-
-        try {
-            tourData = JSON.parse(rawContent);
-        } catch (parseError) {
-            console.error("JSON Parsing Error:", parseError);
-            console.error("Raw Content:", rawContent);
-            return null;
-        }
+        let tourData = JSON.parse(rawContent);
 
         if (!tourData.tour) {
-            return null;
+            return {
+                success: "",
+                error: "No matching tour found...",
+                tour: null,
+            };
         }
 
-        return tourData.tour;
-    } catch {
-        return null;
+        return {
+            success: "Tour generated!",
+            error: "",
+            tour: tourData.tour,
+        };
+    } catch (error: unknown) {
+        if (error instanceof Error && error.message === "Request timed out") {
+            return {
+                success: false,
+                error: "Service is not responding. Please try again later.",
+                tour: null,
+            };
+        }
+
+        return {
+            success: "",
+            error: "Oops! Something went wrong!",
+            tour: null,
+        };
     }
 };

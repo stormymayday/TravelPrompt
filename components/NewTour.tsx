@@ -1,34 +1,24 @@
 "use client";
 
-// import { useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
 import { TourDestinationSchema } from "@/schemas";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getExistingTour } from "@/actions/getExistingTour";
 import { generateTourResponse } from "@/actions/generateTourResponse";
 import { createNewTour } from "@/actions/createNewTour";
 
-// import { Card, CardHeader, CardContent } from "@/components/ui/Card";
 import {
     Form,
     FormField,
     FormControl,
     FormItem,
-    // FormLabel,
     FormMessage,
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
-
 import { Button } from "@/components/ui/Button";
-
 import { toast } from "sonner";
-
-// import FormError from "@/components/FormError";
-// import FormSuccess from "@/components/FormSuccess";
-
 import TourInfo from "./TourInfo";
 
 function NewTour() {
@@ -50,25 +40,23 @@ function NewTour() {
 
             const newTour = await generateTourResponse(destination);
 
-            if (newTour) {
-                await createNewTour(newTour);
+            if (newTour.success) {
+                await createNewTour(newTour.tour);
+
+                toast.success(newTour.success);
 
                 queryClient.invalidateQueries({
                     queryKey: ["tours"],
                 });
 
-                return newTour;
+                return newTour.tour;
             }
 
-            // setError("No matching city found...");
-            toast.error("No matching city found...");
+            toast.error(newTour.error);
 
             return null;
         },
     });
-
-    // const [error, setError] = useState<string | undefined>();
-    // const [success, setSuccess] = useState<string | undefined>();
 
     const form = useForm<z.infer<typeof TourDestinationSchema>>({
         resolver: zodResolver(TourDestinationSchema),
@@ -81,8 +69,6 @@ function NewTour() {
     const handleSubmit = async (
         values: z.infer<typeof TourDestinationSchema>
     ) => {
-        // setSuccess("");
-        // setError("");
         const destination = values;
 
         mutate(destination);
@@ -102,7 +88,6 @@ function NewTour() {
                                 name="city"
                                 render={({ field }) => (
                                     <FormItem>
-                                        {/* <FormLabel>City</FormLabel> */}
                                         <FormControl>
                                             <Input
                                                 {...field}
@@ -112,7 +97,6 @@ function NewTour() {
                                                 placeholder="Enter City"
                                             />
                                         </FormControl>
-                                        {/* <FormMessage /> */}
                                     </FormItem>
                                 )}
                             />
@@ -123,7 +107,6 @@ function NewTour() {
                                 name="country"
                                 render={({ field }) => (
                                     <FormItem>
-                                        {/* <FormLabel>Country</FormLabel> */}
                                         <FormControl>
                                             <Input
                                                 {...field}
@@ -147,9 +130,6 @@ function NewTour() {
                         <FormMessage />
                     </form>
                 </Form>
-
-                {/* <FormError message={error} />
-                <FormSuccess message={success} /> */}
             </div>
 
             <div className="mt-16 w-full">
