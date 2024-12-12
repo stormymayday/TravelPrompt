@@ -36,10 +36,6 @@ export const createNewTour = async (values: z.infer<typeof TourSchema>) => {
             description,
             image,
             stops,
-            user: {
-                // Connecting to user via userId
-                connect: { id: user.id },
-            },
         },
     });
 

@@ -29,7 +29,7 @@ model User {
   accounts      Account[]
   isTwoFactorEnabled Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
-  tours         Tour[]
+  // tours         Tour[]
  
   // @@map("users")
 }
@@ -100,8 +100,8 @@ model Tour {
   description String
   image       String?
   stops       String[]
-  userId      String   @db.ObjectId
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // userId      String   @db.ObjectId
+  // user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([city, country])
 }
