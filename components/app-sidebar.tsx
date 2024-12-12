@@ -25,7 +25,7 @@ const data = {
             icon: Map,
         },
         {
-            title: "New Tour",
+            title: "Generate Tour",
             url: "/tours/new-tour",
             icon: MapPin,
         },
