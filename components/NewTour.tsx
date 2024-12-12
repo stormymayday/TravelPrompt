@@ -78,7 +78,9 @@ function NewTour() {
         },
     });
 
-    const handleSubmit = (values: z.infer<typeof TourDestinationSchema>) => {
+    const handleSubmit = async (
+        values: z.infer<typeof TourDestinationSchema>
+    ) => {
         // setSuccess("");
         // setError("");
         const destination = values;
