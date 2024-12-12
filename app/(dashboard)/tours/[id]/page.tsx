@@ -4,14 +4,16 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/Button";
 import TourInfo from "@/components/TourInfo";
 
+type Params = Promise<{ id: string }>;
+
 interface SingleTourPageProps {
-    params: {
-        id: string;
-    };
+    params: Params;
 }
 
 async function SingleTourPage({ params }: SingleTourPageProps) {
-    const { id } = params;
+    const resolvedParams = await params;
+
+    const { id } = resolvedParams;
 
     const tour = await getSingleTour(id);
 
