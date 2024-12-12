@@ -9,38 +9,11 @@ import { Button } from "@/components/ui/Button";
 
 const ToursPage = () => {
     const [searchValue, setSearchValue] = useState("");
-    const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
 
-    // const { data, isPending } = useQuery({
-    //     queryKey: ["tours", searchValue],
-    //     queryFn: () => getAllTours(searchValue),
-    // });
-
-    // Debouncing the search input
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setSearchValue(value);
-
-        // Using a timeout to delay the actual search
-        const timeoutId = setTimeout(() => {
-            setDebouncedSearchValue(value);
-        }, 500);
-
-        return () => clearTimeout(timeoutId);
-    };
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, isPending } = useQuery({
-        queryKey: ["tours", debouncedSearchValue],
-        queryFn: () => getAllTours(debouncedSearchValue),
-        // Adding staleTime of 5 minutes to improve performance
-        staleTime: 1000 * 60 * 5,
+        queryKey: ["tours", searchValue],
+        queryFn: () => getAllTours(searchValue),
     });
-
-    const handleReset = () => {
-        setSearchValue("");
-        setDebouncedSearchValue("");
-    };
 
     return (
         <div className="flex flex-col items-center w-full max-w-4xl px-4 mx-auto">
@@ -49,18 +22,16 @@ const ToursPage = () => {
                     <div className="flex-1 w-full">
                         <Input
                             type="text"
-                            placeholder="Enter City or Country"
+                            placeholder="enter city or country here..."
                             value={searchValue}
-                            // onChange={(e) => setSearchValue(e.target.value)}
-                            onChange={handleSearchChange}
+                            onChange={(e) => setSearchValue(e.target.value)}
                             maxLength={50}
                         />
                     </div>
                     <Button
                         type="button"
-                        // disabled={isPending}
-                        // onClick={() => setSearchValue("")}
-                        onClick={handleReset}
+                        disabled={isPending}
+                        onClick={() => setSearchValue("")}
                         className="w-full sm:w-auto"
                     >
                         Reset

@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export const getAllTours = async (searchTerm?: string) => {
     if (!searchTerm) {
@@ -9,7 +10,7 @@ export const getAllTours = async (searchTerm?: string) => {
                 city: "asc",
             },
         });
-
+        revalidatePath("/tours");
         return tours;
     }
 
@@ -19,11 +20,13 @@ export const getAllTours = async (searchTerm?: string) => {
                 {
                     city: {
                         contains: searchTerm,
+                        mode: "insensitive",
                     },
                 },
                 {
                     country: {
                         contains: searchTerm,
+                        mode: "insensitive",
                     },
                 },
             ],
@@ -33,5 +36,6 @@ export const getAllTours = async (searchTerm?: string) => {
         },
     });
 
+    revalidatePath("/tours");
     return tours;
 };
