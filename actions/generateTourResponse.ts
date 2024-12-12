@@ -1,20 +1,29 @@
 "use server";
 
 import OpenAI from "openai";
+import * as z from "zod";
+import { TourDestinationSchema } from "@/schemas";
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-interface generateTourResponseInterface {
-    city: string;
-    country: string;
-}
+export const generateTourResponse = async (
+    values: z.infer<typeof TourDestinationSchema>
+) => {
+    const validatedFields = TourDestinationSchema.safeParse(values);
 
-export const generateTourResponse = async ({
-    city,
-    country,
-}: generateTourResponseInterface) => {
+    // Checking if the fields are valid
+    if (!validatedFields.success) {
+        // return {
+        //     error: "Invalid fields!",
+        // };
+        return null;
+    }
+
+    // Extracting validated fields
+    const { city, country } = validatedFields.data;
+
     const query = `Find a ${city} in this ${country}.
                     If ${city} in this ${country} exists, create a list of things families can do in this ${city},${country}. 
                     Once you have a list, create a one-day tour. Response should be in the following JSON format: 

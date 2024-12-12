@@ -5,14 +5,11 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { GenerateTourSchema } from "@/schemas";
-import {
-    useMutation,
-    // useQueryClient
-} from "@tanstack/react-query";
-// import { getExistingTour } from "@/actions/getExistingTour";
+import { TourDestinationSchema } from "@/schemas";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { getExistingTour } from "@/actions/getExistingTour";
 import { generateTourResponse } from "@/actions/generateTourResponse";
-// import { createNewTour } from "@/actions/createNewTour";
+import { createNewTour } from "@/actions/createNewTour";
 
 import { Card, CardHeader, CardContent } from "@/components/ui/Card";
 import {
@@ -34,22 +31,31 @@ import FormSuccess from "@/components/FormSuccess";
 
 import TourInfo from "./TourInfo";
 
-interface Destination {
-    city: string;
-    country: string;
-}
-
 function NewTour() {
+    const queryClient = useQueryClient();
+
     const {
         mutate,
         isPending,
         data: tour,
     } = useMutation({
-        mutationFn: async (destination: Destination) => {
+        mutationFn: async (
+            destination: z.infer<typeof TourDestinationSchema>
+        ) => {
+            const existingTour = await getExistingTour(destination);
+
+            if (existingTour) {
+                return existingTour;
+            }
+
             const newTour = await generateTourResponse(destination);
 
             if (newTour) {
-                console.log(newTour);
+                await createNewTour(newTour);
+
+                queryClient.invalidateQueries({
+                    queryKey: ["tours"],
+                });
 
                 return newTour;
             }
@@ -64,15 +70,15 @@ function NewTour() {
     const [error, setError] = useState<string | undefined>();
     const [success, setSuccess] = useState<string | undefined>();
 
-    const form = useForm<z.infer<typeof GenerateTourSchema>>({
-        resolver: zodResolver(GenerateTourSchema),
+    const form = useForm<z.infer<typeof TourDestinationSchema>>({
+        resolver: zodResolver(TourDestinationSchema),
         defaultValues: {
             city: "",
             country: "",
         },
     });
 
-    const handleSubmit = (values: z.infer<typeof GenerateTourSchema>) => {
+    const handleSubmit = (values: z.infer<typeof TourDestinationSchema>) => {
         setSuccess("");
         setError("");
         const destination = values;
@@ -85,7 +91,7 @@ function NewTour() {
             <Card className="w-full">
                 <CardHeader>
                     <p className="text-2xl font-semibold text-center">
-                        🗺️ New Tour
+                        🌎 New Tour
                     </p>
                 </CardHeader>
                 <CardContent>
