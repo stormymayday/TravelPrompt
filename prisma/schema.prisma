@@ -29,6 +29,7 @@ model User {
   accounts      Account[]
   isTwoFactorEnabled Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
+  tokens  Int    @default(1000)
   // tours         Tour[]
  
   // @@map("users")
@@ -105,3 +106,9 @@ model Tour {
 
   @@unique([city, country])
 }
+
+// model Token {
+//   userId      String @id @db.ObjectId @map("_id")
+//   tokens  Int    @default(1000)
+// }
+

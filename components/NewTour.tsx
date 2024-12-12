@@ -19,10 +19,16 @@ import {
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { toast } from "sonner";
-import TourInfo from "./TourInfo";
+import TourInfo from "@/components/TourInfo";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useSession } from "next-auth/react";
+import { subtractTokens } from "@/actions/subtractTokens";
 
 function NewTour() {
     const queryClient = useQueryClient();
+
+    const user = useCurrentUser();
+    const { update } = useSession();
 
     const {
         mutate,
@@ -34,14 +40,38 @@ function NewTour() {
         ) => {
             const existingTour = await getExistingTour(destination);
 
+            if (!user) {
+                return null;
+            }
+
+            if (!user.id) {
+                return null;
+            }
+
             if (existingTour) {
                 return existingTour;
+            }
+
+            if (user?.tokens < 300) {
+                toast.error("Not enough tokes left!");
+                return null;
             }
 
             const newTour = await generateTourResponse(destination);
 
             if (newTour.success) {
-                await createNewTour(newTour.tour);
+                await createNewTour(newTour.tour?.tour);
+
+                console.log(
+                    `CLIENT User ID: ${user.id}, Tokens: ${newTour.tour?.tokens}`
+                );
+
+                const result = await subtractTokens(
+                    user.id,
+                    newTour.tour?.tokens
+                );
+
+                console.log(`RESULT: ${result}`);
 
                 toast.success(newTour.success);
 
@@ -49,7 +79,9 @@ function NewTour() {
                     queryKey: ["tours"],
                 });
 
-                return newTour.tour;
+                await update();
+
+                return newTour.tour?.tour;
             }
 
             toast.error(newTour.error);
@@ -76,6 +108,7 @@ function NewTour() {
 
     return (
         <div className="flex flex-col items-center w-full max-w-4xl px-4">
+            <h1 className="mb-5 self-start">Tokens Left: {user?.tokens}</h1>
             <div className="w-full">
                 <Form {...form}>
                     <form

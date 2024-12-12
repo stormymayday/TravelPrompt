@@ -3,6 +3,7 @@
 import OpenAI from "openai";
 import * as z from "zod";
 import { TourDestinationSchema } from "@/schemas";
+import { currentUser } from "@/utils/server-current-user/currentUser";
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
@@ -11,6 +12,16 @@ const openai = new OpenAI({
 export const generateTourResponse = async (
     values: z.infer<typeof TourDestinationSchema>
 ) => {
+    const user = await currentUser();
+
+    if (!user) {
+        return {
+            success: "",
+            error: "Access denied!",
+            tour: null,
+        };
+    }
+
     // Validate input fields
     const validatedFields = TourDestinationSchema.safeParse(values);
 
@@ -71,7 +82,10 @@ export const generateTourResponse = async (
         return {
             success: "Tour generated!",
             error: "",
-            tour: tourData.tour,
+            tour: {
+                tour: tourData.tour,
+                tokens: (response as any).usage.total_tokens,
+            },
         };
     } catch (error: unknown) {
         if (error instanceof Error && error.message === "Request timed out") {

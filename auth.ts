@@ -13,6 +13,7 @@ export type ExtendedUser = DefaultSession["user"] & {
     role: UserRole;
     isTwoFactorEnabled: boolean;
     isOAuth: boolean;
+    tokens: number;
     // add extra fields here ...
 };
 
@@ -110,6 +111,7 @@ export const {
                 session.user.name = token.name;
                 session.user.email = token.email || "";
                 session.user.isOAuth = token.isOAuth as boolean;
+                session.user.tokens = token.tokens as number;
             }
 
             return session;
@@ -132,6 +134,7 @@ export const {
             token.email = existingUser.email;
             token.role = existingUser.role;
             token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+            token.tokens = existingUser.tokens;
 
             return token;
         },
