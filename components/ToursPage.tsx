@@ -40,7 +40,7 @@ const ToursPage = () => {
             </div>
 
             <div className="mt-16 w-full">
-                {!isPending && <ToursList data={data || []} />}
+                <ToursList data={data || []} />
             </div>
         </div>
     );

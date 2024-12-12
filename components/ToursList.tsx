@@ -7,8 +7,7 @@ interface ToursListInterface {
 }
 
 const ToursList = ({ data }: ToursListInterface) => {
-    if (data.length === 0)
-        return <h4 className="text-lg ">No tours found...</h4>;
+    if (data.length === 0) return null;
 
     return (
         <div className="grid sm:grid-cols-2  lg:grid-cols-4 gap-8">
