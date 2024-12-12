@@ -11,13 +11,10 @@ const openai = new OpenAI({
 export const generateTourResponse = async (
     values: z.infer<typeof TourDestinationSchema>
 ) => {
+    // Validate input fields
     const validatedFields = TourDestinationSchema.safeParse(values);
 
-    // Checking if the fields are valid
     if (!validatedFields.success) {
-        // return {
-        //     error: "Invalid fields!",
-        // };
         return null;
     }
 
@@ -39,7 +36,12 @@ export const generateTourResponse = async (
                     If you can't find info on exact ${city}, or ${city} does not exist, or it's population is less than 1, or it is not located in the following ${country} return { "tour": null }, with no additional characters.`;
 
     try {
-        const response = await openai.chat.completions.create({
+        const timeoutPromise = new Promise((_, reject) =>
+            // Waiting for 15 seconds
+            setTimeout(() => reject(new Error("Request timed out")), 15000)
+        );
+
+        const responsePromise = openai.chat.completions.create({
             messages: [
                 { role: "system", content: "you are a tour guide" },
                 { role: "user", content: query },
@@ -47,16 +49,27 @@ export const generateTourResponse = async (
             model: "gpt-3.5-turbo",
             temperature: 0,
         });
-        // potentially returns a text with error message
-        const tourData = JSON.parse(response.choices[0].message.content || "");
+
+        const response = await Promise.race([responsePromise, timeoutPromise]);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const rawContent = (response as any).choices[0].message.content || "";
+        let tourData;
+
+        try {
+            tourData = JSON.parse(rawContent);
+        } catch (parseError) {
+            console.error("JSON Parsing Error:", parseError);
+            console.error("Raw Content:", rawContent);
+            return null;
+        }
 
         if (!tourData.tour) {
             return null;
         }
 
         return tourData.tour;
-    } catch (error) {
-        console.log(error);
+    } catch {
         return null;
     }
 };
