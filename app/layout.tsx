@@ -7,9 +7,16 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
     title: "TravelPrompt",
-    description:
-        "Get personalized travel suggestions at your fingertips with TravelPrompt. Our AI-driven platform quickly generates custom itineraries for any city!",
+    description: "AI-Driven City Tour Generator",
 };
+
+// Custom font:
+import { Roboto } from "next/font/google";
+import { cn } from "@/lib/utils";
+const font = Roboto({
+    subsets: ["latin"],
+    weight: ["700"],
+});
 
 export default async function RootLayout({
     children,
@@ -21,7 +28,7 @@ export default async function RootLayout({
     return (
         <SessionProvider session={session}>
             <html lang="en" suppressHydrationWarning>
-                <body>
+                <body className={cn(font.className)}>
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="system"
