@@ -20,7 +20,7 @@ export function NavMain({
         icon?: LucideIcon;
     }[];
 }) {
-    const { toggleSidebar } = useSidebar();
+    const { openMobile, toggleSidebar } = useSidebar();
     return (
         <SidebarGroup>
             <SidebarMenu>
@@ -28,7 +28,11 @@ export function NavMain({
                     <SidebarMenuItem key={item.title}>
                         <Link href={item.url}>
                             <SidebarMenuButton
-                                onClick={toggleSidebar}
+                                onClick={() => {
+                                    if (openMobile) {
+                                        toggleSidebar();
+                                    }
+                                }}
                                 tooltip={item.title}
                             >
                                 {item.icon && <item.icon />}

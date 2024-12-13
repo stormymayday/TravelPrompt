@@ -40,18 +40,22 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const { toggleSidebar } = useSidebar();
+    const { openMobile, toggleSidebar } = useSidebar();
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton
-                            onClick={toggleSidebar}
+                            onClick={() => {
+                                if (openMobile) {
+                                    toggleSidebar();
+                                }
+                            }}
                             size="lg"
                             asChild
                         >
-                            <Link href="/tours">
+                            <Link href="/tours/new-tour">
                                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                                     <Earth className="size-4" />
                                 </div>

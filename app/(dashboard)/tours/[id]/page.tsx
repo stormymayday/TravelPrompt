@@ -5,12 +5,32 @@ import { buttonVariants } from "@/components/ui/Button";
 import TourInfo from "@/components/TourInfo";
 import Image from "next/image";
 import axios from "axios";
-const url = `https://api.unsplash.com/search/photos?client_id=${process.env.UNSPLASH_API_KEY}&query=`;
+// const url = `https://api.unsplash.com/search/photos?client_id=${process.env.UNSPLASH_API_KEY}&query=`;
+const url = "https://api.pexels.com/v1/search";
 
 type Params = Promise<{ id: string }>;
 
 interface SingleTourPageProps {
     params: Params;
+}
+
+async function getTourImage(city: string) {
+    try {
+        const response = await axios.get(url, {
+            headers: {
+                Authorization: process.env.PEXELS_API_KEY || "",
+            },
+            params: {
+                query: city,
+                per_page: 1,
+            },
+        });
+
+        return response.data.photos?.[0]?.src?.large || null;
+    } catch (error) {
+        // console.error("Error fetching image from Pexels:", error);
+        return null;
+    }
 }
 
 async function SingleTourPage({ params }: SingleTourPageProps) {
@@ -24,8 +44,10 @@ async function SingleTourPage({ params }: SingleTourPageProps) {
         return notFound();
     }
 
-    const { data } = await axios(`${url}${tour.city}`);
-    const tourImage = data?.results[0]?.urls?.raw;
+    // const { data } = await axios(`${url}${tour.city}`);
+    // const tourImage = data?.results[0]?.urls?.raw;
+
+    const tourImage = await getTourImage(tour.city);
 
     return (
         <div>
