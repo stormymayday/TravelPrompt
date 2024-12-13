@@ -8,6 +8,7 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    useSidebar,
 } from "@/components/ui/sidebar";
 
 export function NavMain({
@@ -19,13 +20,17 @@ export function NavMain({
         icon?: LucideIcon;
     }[];
 }) {
+    const { toggleSidebar } = useSidebar();
     return (
         <SidebarGroup>
             <SidebarMenu>
                 {items.map((item) => (
                     <SidebarMenuItem key={item.title}>
                         <Link href={item.url}>
-                            <SidebarMenuButton tooltip={item.title}>
+                            <SidebarMenuButton
+                                onClick={toggleSidebar}
+                                tooltip={item.title}
+                            >
                                 {item.icon && <item.icon />}
                                 <span>{item.title}</span>
                             </SidebarMenuButton>

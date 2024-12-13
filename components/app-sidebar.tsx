@@ -14,6 +14,8 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
     SidebarRail,
+    // SidebarTrigger,
+    useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 
@@ -38,12 +40,17 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const { toggleSidebar } = useSidebar();
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton size="lg" asChild>
+                        <SidebarMenuButton
+                            onClick={toggleSidebar}
+                            size="lg"
+                            asChild
+                        >
                             <Link href="/tours">
                                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                                     <Earth className="size-4" />
