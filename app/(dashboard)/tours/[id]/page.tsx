@@ -6,6 +6,7 @@ import TourInfo from "@/components/TourInfo";
 import Image from "next/image";
 import axios from "axios";
 // const url = `https://api.unsplash.com/search/photos?client_id=${process.env.UNSPLASH_API_KEY}&query=`;
+// PEXELS
 const url = "https://api.pexels.com/v1/search";
 
 type Params = Promise<{ id: string }>;
