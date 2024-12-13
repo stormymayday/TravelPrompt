@@ -12,12 +12,18 @@ export const LoginSchema = z.object({
 });
 
 export const TourDestinationSchema = z.object({
-    city: z.string().min(1, {
-        message: "City is required",
-    }),
-    country: z.string().min(1, {
-        message: "Country is required",
-    }),
+    city: z
+        .string()
+        .min(1, {
+            message: "City is required",
+        })
+        .trim(),
+    country: z
+        .string()
+        .min(1, {
+            message: "Country is required",
+        })
+        .trim(),
 });
 
 export const TourSchema = z.object({

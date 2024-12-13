@@ -28,7 +28,7 @@ export const generateTourResponse = async (
     if (!validatedFields.success) {
         return {
             success: "",
-            error: " Please enter City and Country.",
+            error: "Please enter City and Country.",
             tour: null,
         };
     }
