@@ -27,7 +27,7 @@ async function getTourImage(city: string) {
         });
 
         return response.data.photos?.[0]?.src?.large || null;
-    } catch (error) {
+    } catch {
         // console.error("Error fetching image from Pexels:", error);
         return null;
     }
